@@ -62,6 +62,14 @@ class Users extends CI_Controller {
     else
     {
       $this->user_model->set_user();
+      
+      $to_session = array (
+        'email' => $this->input->post('email'),
+        'is_logged_in' => true
+        );
+
+      $this->session->set_userdata($to_session);
+      
       redirect('news/create');
       $this->load->view('users/create_success');
     }

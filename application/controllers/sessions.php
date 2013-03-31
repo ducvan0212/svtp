@@ -15,16 +15,8 @@ class Sessions extends CI_Controller {
 
     $data = array (
       'title' => "Log in",
-      'email' => $this->input->post('email'),
-      'is_logged_in' => true
     );
 
-    $to_session = array (
-      'email' => $this->input->post('email'),
-      'is_logged_in' => true
-    );
-
-    $this->session->set_userdata($to_session);
     if ($this->form_validation->run() === FALSE)
     {
       $this->load->view('templates/header', $data); 
@@ -33,6 +25,12 @@ class Sessions extends CI_Controller {
     }
     else
     {
+      $to_session = array (
+        'email' => $this->input->post('email'),
+        'is_logged_in' => true
+        );
+
+      $this->session->set_userdata($to_session);
       redirect('home');
     }    
   }
