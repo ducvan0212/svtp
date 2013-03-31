@@ -1,11 +1,18 @@
 <?php
-class News extends CI_Controller {
+class Users extends CI_Controller {
 
   public function __construct()
   {
     parent::__construct();
-    $this->load->model('news_model');
-    $this->is_logged_in();
+    $this->load->model('user_model');
+  }
+
+  public function newUser() {
+    $data['title'] = 'Sign up';
+
+    $this->load->view('templates/header', $data);
+    $this->load->view('users/newUser', $data);
+    $this->load->view('templates/footer');
   }
 
   public function index()
@@ -36,33 +43,27 @@ class News extends CI_Controller {
 
   public function create()
   {
-    $this->load->helper('form');
     $this->load->library('form_validation');
     
-    $data['title'] = 'Create a news item';
-    
-    $this->form_validation->set_rules('title', 'Title', 'required');
-    $this->form_validation->set_rules('text', 'text', 'required');
-    
+    $data['title'] = "Sign up";
+
+    $this->form_validation->set_rules('name', 'Name', 'required|min_length[3]|max_length[45]');
+    $this->form_validation->set_rules('email', 'Email', 'required|valid_email|max_length[45]');
+    $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]|max_length[32]');
+    $this->form_validation->set_rules('confirm', 'Password Confirmation', 'required|match[password]');
+
     if ($this->form_validation->run() === FALSE)
     {
       $this->load->view('templates/header', $data); 
-      $this->load->view('news/create');
+      $this->load->view('users/newUser');
       $this->load->view('templates/footer');
       
     }
     else
     {
-      $this->news_model->set_news();
-      $this->load->view('news/success');
-    }
-  }
-
-  function is_logged_in() {
-    $is_logged_in = $this->session->userdata('is_logged_in');
-    if(!isset($is_logged_in) || ($is_logged_in != true)) {
-      echo 'You must <a href="/login">sign in</a> to access this page';
-      die();
+      $this->user_model->set_user();
+      redirect('news/create');
+      $this->load->view('users/create_success');
     }
   }
 }
