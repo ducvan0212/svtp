@@ -1,0 +1,28 @@
+tao database la svtt
+
+=============================================
+delimiter $$
+
+CREATE TABLE `User` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `email` varchar(45) NOT NULL,
+  `password` varchar(32) NOT NULL,
+  `name` varchar(45) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
+  KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1$$
+
+
+=============================================
+delimiter $$
+
+CREATE TABLE `news` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(128) NOT NULL,
+  `slug` varchar(128) NOT NULL,
+  `text` text NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `slug` (`slug`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1$$
+
